@@ -8,20 +8,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          version: 9.0.2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: 'pnpm'
+          node-version: lts/*
+          check-latest: true
+          cache: 'npm'
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Check prettier format
-        run: pnpm run prettier-check
+        run: npm run prettier-check
 
       - name: Build packages
-        run: pnpm run build --filter "./packages/*"
+        run: npm run build --filter "./packages/*"
